@@ -1,0 +1,54 @@
+<!DOCTYPE html> <html>
+<h1>File Upload</h1>
+<script type = "text/javascript" src ="papaparse.min.js"></script>
+<body>
+
+    <table>
+        <tr>
+            <th>
+                <input type="file" accept=".csv"  id="myFile" name="filename" >
+            </th>
+        </tr>
+    </table>
+<!--    <input type="submit" onclick="later()">-->
+    <button id ="btn_csv_upload">Submit</button>
+<div id="example-table"></div>
+
+</body>
+
+<script type= "text/javascript">
+let csv_button = document.getElementById('btn_csv_upload').addEventListener('click',()=> {
+        Papa.parse(document.getElementById('myFile').files[0],
+            {
+                 download:true,
+                 header:true,
+                complete:function (results)
+                {
+                    console.log(results);
+                    //initialize table
+                    let table = new Tabulator("#example-table", {
+                        data:results, //assign data to table
+                        autoColumns:true, //create columns from data field names
+                    });
+                }
+            })
+})
+
+
+
+</script>
+
+</script>
+</html>
+
+<!--<!DOCTYPE html> <html>-->
+
+<!--<body>-->
+<!--<h1>File Upload</h1>-->
+<!--<form action="/action_page.php">-->
+<!--  <input type="file" id="myFile" name="filename">-->
+<!--  <input type="submit">-->
+<!--</form>-->
+<!--</body>-->
+<!--</html>-->
+

@@ -1,8 +1,6 @@
 <!DOCTYPE html> <html>
 <h1>File Upload</h1>
-<script type = "text/javascript" src ="papaparse.min.js"></script>
 <body>
-
     <table>
         <tr>
             <th>
@@ -12,33 +10,51 @@
     </table>
 <!--    <input type="submit" onclick="later()">-->
     <button id ="btn_csv_upload">Submit</button>
-<div id="example-table"></div>
+
+<div id="example-table">blabla</div>
 
 </body>
+<script type = "text/javascript" src ="papaparse.min.js"></script>
+<script type= "text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js">
+var table = new Tabulator("#example-table", {
+    height:"311px",
+    columns:[
+    {title:"Name", field:"name"},
+    {title:"Progress", field:"progress", sorter:"number"},
+    {title:"Gender", field:"gender"},
+    {title:"Rating", field:"rating"},
+    {title:"Favourite Color", field:"col"},
+    {title:"Date Of Birth", field:"dob", hozAlign:"center"},
+    ],
+});
 
-<script type= "text/javascript">
+console.log("started");
 let csv_button = document.getElementById('btn_csv_upload').addEventListener('click',()=> {
         Papa.parse(document.getElementById('myFile').files[0],
             {
-                 download:true,
-                 header:true,
+                console.log("here");
+                download:true,
+                header:true,
                 complete:function (results)
                 {
                     console.log(results);
-                    //initialize table
-                    let table = new Tabulator("#example-table", {
-                        data:results, //assign data to table
-                        autoColumns:true, //create columns from data field names
-                    });
+<!--                    //initialize table-->
+<!--                    let table = new Tabulator("#example-table", {-->
+<!--                        data:results, //assign data to table-->
+<!--                        autoColumns:true, //create columns from data field names-->
+<!--                    });-->
+
+
                 }
             })
 })
 
-
-
 </script>
 
-</script>
+<!--<link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">-->
+<!--<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>-->
+
+
 </html>
 
 <!--<!DOCTYPE html> <html>-->

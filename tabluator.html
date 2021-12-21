@@ -10,7 +10,9 @@
 </head>
 
 <body>
-    <table>
+
+
+<div id="example-table"><table>
         <tr>
             <th>
                 <input type="file" accept=".csv"  id="myFile" name="filename" >
@@ -18,9 +20,7 @@
         </tr>
     </table>
 <!--    <input type="submit" onclick="later()">-->
-    <button id ="btn_csv_upload">Submit</button>
-
-<div id="example-table"></div>
+    <button id ="btn_csv_upload">Submit</button></div>
 
 </body>
 
@@ -51,8 +51,22 @@
                 {
 
                    let table = new Tabulator("#example-table", {
-                        data:results.data, //assign data to table-->
-                       autoColumns:true, //create columns from data field names-->
+                       selectable: 1,
+                       layout:"fitColumns",
+                       placeholder: "Data is not available",
+                       data: results.data,
+                       pagination: "local",
+                       paginationSize: 10,
+                       columns:[
+                       {title:"Name",field:"name",headerFilter: "input", sorter:"string"},
+                       {title:"Host ID",field:"host_id",sorter:"number"},
+                       {title:"ID",field:"id",sorter:"number"},
+                       {title:"Neighborhood",field:"neighborhood",sorter:"number"},
+                       {title:"Room Type",field:"room_type",sorter:"string"},
+                       {title:"Price",field:"price",sorter:"number"}
+
+                       ]
+
                    });
 
                 }

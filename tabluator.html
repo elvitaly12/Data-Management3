@@ -6,13 +6,13 @@
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
     <script type = "text/javascript" src ="papaparse.min.js">
 </script>
-    File Upload
+    <h1 id="title_h1">File Upload</h1>
 </head>
 
 <body>
 
 
-<div id="example-table"><table>
+<table>
         <tr>
             <th>
                 <input type="file" accept=".csv"  id="myFile" name="filename" >
@@ -20,7 +20,11 @@
         </tr>
     </table>
 <!--    <input type="submit" onclick="later()">-->
-    <button id ="btn_csv_upload">Submit</button></div>
+    <button id ="btn_csv_upload">Submit</button>
+    <button id ="btn_clear" style="visibility: hidden">Clear</button>
+    <button id ="btn_download" style="visibility: hidden">Download Data</button>
+
+<div id="example-table" style="visibility: hidden"></div>
 
 </body>
 
@@ -41,33 +45,83 @@
 
 
 <script>
+    let btn_upload = document.getElementById('btn_csv_upload');
+    let btn_download = document.getElementById('btn_download');
+    let btn_clear = document.getElementById('btn_clear');
+<!--    let btn_csv_upload = document.getElementById('btn_csv_upload');-->
+<!--    let btn_csv_upload = document.getElementById('btn_csv_upload');-->
+<!--    let btn_csv_upload = document.getElementById('btn_csv_upload');-->
 
-    let csv_button = document.getElementById('btn_csv_upload').addEventListener('click',()=> {
-        Papa.parse(document.getElementById('myFile').files[0],
+    let myFile_obj = document.getElementById('myFile');
+    let filename = document.getElementById('myFile').files[0];
+    let table_div = document.getElementById('example-table');
+    let title_h1 = document.getElementById('title_h1');
+    let csv_button = btn_csv_upload.addEventListener('click',()=> {
+        Papa.parse(myFile_obj.files[0],
             {
                 download:true,
                 header:true,
                 complete:function (results)
                 {
+                   table_div.style.visibility = "visible";
+                   btn_csv_upload.style.visibility = "hidden";
+                   myFile_obj.style.visibility = "hidden";
+                   title_h1.innerHTML = "Airbnb Data";
 
                    let table = new Tabulator("#example-table", {
                        selectable: 1,
-                       layout:"fitColumns",
-                       placeholder: "Data is not available",
                        data: results.data,
+                       height:355,
+                       layout:"fitColumns",
                        pagination: "local",
                        paginationSize: 10,
                        columns:[
-                       {title:"Name",field:"name",headerFilter: "input", sorter:"string"},
-                       {title:"Host ID",field:"host_id",sorter:"number"},
-                       {title:"ID",field:"id",sorter:"number"},
-                       {title:"Neighborhood",field:"neighborhood",sorter:"number"},
-                       {title:"Room Type",field:"room_type",sorter:"string"},
-                       {title:"Price",field:"price",sorter:"number"}
-
+                           {title:"Name",field:"name",headerFilter: "input", sorter:"string"},
+                           {title:"Host ID",field:"host_id",sorter:"number"},
+                           {title:"ID",field:"id",sorter:"number"},
+                           {title:"Neighbourhood",field:"neighbourhood",sorter:"number"},
+                           {title:"Room Type",field:"room_type",sorter:"string"},
+                           {title:"Price",field:"price",sorter:"number"}
                        ]
 
                    });
+
+                   document.getElementById('btn_download').style.visibility = "visible";
+                   document.getElementById('btn_clear').style.visibility = "visible";
+                   btn_clear.addEventListener("click", function (e) {
+                        table_div.style.visibility = "hidden";
+                        btn_upload.style.visibility = "visible";
+                        myFile.style.visibility = "visible";
+                        title_h1.innerHTML = "File Upload";
+                        btn_download.style.visibility = "hidden";
+                        btn_clear.style.visibility = "hidden";
+                        myFile_obj.value = "";
+                        table.clearData();
+
+<!--                        info_el.innerHTML = "";-->
+<!--                        tbl.clearData();-->
+<!--                        input_file.value = "";-->
+<!--                        csv_file = null;-->
+<!--                        tbl_view.style.visibility = "hidden";-->
+
+<!--                        info_el.style.visibility = "hidden";-->
+<!--                        clear_btn.style.visibility = "hidden";-->
+<!--                        download_btn.style.visibility = "hidden";-->
+<!--                        input_sec.style.visibility = "visible";-->
+<!--                        submit_btn.style.visibility = "hidden";-->
+
+<!--                        sort_div.style.visibility = "hidden";-->
+<!--                        map_view.style.visibility = "hidden";-->
+<!--                        input_sec.style.display = "block"-->
+<!--                        card_div.style.visibility = "hidden";-->
+<!--                        last_red_marker_latlng="";-->
+
+
+                    });
+
+                btn_download.addEventListener("click", function () {
+                    table.download("csv", myFile_obj.files[0].name);
+                });
 
                 }
 

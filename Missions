@@ -1,11 +1,16 @@
+
+
+* implement leaflet logic -> given a coordinate we want it zoom in the in the map
+* when clicking on an entry-> show additional information and design the card
+* design html page using css (at last)
+
+* later :  check if we need prevent users to get non csv's files
+
+done:
+
 * implement basic html page with upload button
 * parse the csv file using papa parse
 * implement table logic-> we want the table to be interactive (filter,sorting,pagination)
-
 * create user for mapbox to get a token
-* implement leaflet logic -> given a coordinate we want it zoom in the in the map
-* when clicking on an entry-> show additional information and design the cardnp
-* design html page using css (at last)
 
 
-* later :  check if we need prevent users to get non csv's files

@@ -12,13 +12,21 @@
 <!--	<meta charset="utf-8" />-->
 <!--	<meta name="viewport" content="width=device-width, initial-scale=1.0">-->
 
-<!--&lt;!&ndash;	<link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />&ndash;&gt;-->
 
 <!--    <link rel="stylesheet" href="tut6/leaflet/leaflet.css"/>-->
-<!--    <script src="tut6/leaflet/leaflet.js"></script>-->
+
+
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
    integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
    crossorigin=""/>
+          <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
+
+
+
+
+
 
 	 <!-- Make sure you put this AFTER Leaflet's CSS -->
 
@@ -35,28 +43,64 @@ Longitude: <input type="text" name="lng" id="lng"/>
 
 
 
- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-   crossorigin=""></script>
+<!-- <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"-->
+<!--   integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="-->
+<!--   crossorigin=""></script>-->
 <script>
 
-	var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
 
-	L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	 var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
+	L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA', {
+		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
 		maxZoom: 18,
-		attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-			'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-			'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-		id: 'mapbox.streets-v11',
-		accessToken:'pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA'
+		tileSize: 512,
+	    zoomOffset: -1,
+		// attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
+		// 	'<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+		// 	'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+
+		id: 'mapbox/streets-v11',
+		// accessToken:Token,
 	}).addTo(mymap);
 
-	function zoomTo() {
+		function zoomTo() {
 		var lat = document.getElementById("lat").value;
 		var lng = document.getElementById("lng").value;
 		// mymap.panTo(new L.LatLng(lat, lng));
-		mymap.setView([lat,lng],13);
+		mymap.setView([lat,lng],17);
 	}
+
+
+
+
+
+
+	//
+	//
+	//  var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
+	// L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
+	// 	maxZoom: 18,
+	// 	tileSize: 512,
+	//  zoomOffset: -1,
+	// 	attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+	// 	id: 'mapbox/streets-v11',
+	// 	accessToken:'pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA'
+	// }).addTo(mymap);
+	//
+	//     var mymap = L.map('mapid');
+
+
+
+    // L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
+    //     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+    //     maxZoom: 18,
+    //     id: 'mapbox/streets-v11',
+    //     tileSize: 512,
+    //     // zoomOffset: -1,
+    //     accessToken: 'pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA'
+    // }).addTo(mymap);
+
+
 </script>
 </body>
 </html>

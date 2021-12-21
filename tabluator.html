@@ -49,12 +49,12 @@
                 header:true,
                 complete:function (results)
                 {
-                     console.log(get_data(results))
-                   // let table = new Tabulator("#example-table", {
-                   //      data:get_data(results), //assign data to table-->
-                   //     autoColumns:true, //create columns from data field names-->
-                   // });
-             // document.write(11);
+
+                   let table = new Tabulator("#example-table", {
+                        data:results.data, //assign data to table-->
+                       autoColumns:true, //create columns from data field names-->
+                   });
+
                 }
 
             })

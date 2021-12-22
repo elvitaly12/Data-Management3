@@ -6,6 +6,14 @@
 
 * later :  check if we need prevent users to get non csv's files
 
+
+NEW MISSIONS FOR SHORT TERM:
+
+1. check  why download file doesnt work
+2. check if user clicked submit before enter a file
+3. check why buttons "download" and "clear" dont appear after first clear and another input file
+
+
 done:
 
 * implement basic html page with upload button

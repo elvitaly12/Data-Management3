@@ -41,77 +41,21 @@
 
 <script>
     let myFile_obj = null;
+    let filename;
     let btn_submit = document.getElementById('btn_submit');
     let btn_download = document.getElementById('btn_download');
     let btn_clear = document.getElementById('btn_clear');
 
     //console.log("HERE");
 
-    //let filename = document.getElementById('myFile').files[0].name;
+
     let table_div = document.getElementById('example-table');
     let map_div = document.getElementById('mapid');
     let title_h1 = document.getElementById('title_h1');
 
-
-
-    let csv_button = btn_submit.addEventListener('click',()=> {
-        Papa.parse(myFile_obj.files[0], {
-                download:true,
-                header:true,
-                complete:function (results)
-                {
-                   table_div.style.visibility = "visible";
-                   map_div.style.visibility="visible";
-                   btn_submit.style.visibility = "hidden";
-                   myFile_obj.style.visibility = "hidden";
-                   title_h1.innerHTML = "Airbnb Data";
-
-                   var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
-                        L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA', {
-                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                            maxZoom: 18,
-                            tileSize: 512,
-                            zoomOffset: -1,
-                            id: 'mapbox/streets-v11',
-                            // accessToken:Token,
-                        }).addTo(mymap);
-                         mymap.invalidateSize();
-
-                        function zoomTo() {
-                            var lat = document.getElementById("lat").value;
-                            var lng = document.getElementById("lng").value;
-                            // mymap.panTo(new L.LatLng(lat, lng));
-                            mymap.setView([lat,lng],17);
-                        }
-
-                   let table = new Tabulator("#example-table", {
-                       selectable: 1,
-                       data: results.data,
-                       height:355,
-                       layout:"fitColumns",
-                       pagination: "local",
-                       paginationSize: 10,
-                       columns:[
-                           {title:"Name",field:"name",headerFilter: "input", sorter:"string"},
-                           {title:"Host ID",field:"host_id",sorter:"number"},
-                           {title:"ID",field:"id",sorter:"number"},
-                           {title:"Neighbourhood",field:"neighbourhood",sorter:"number"},
-                           {title:"Room Type",field:"room_type",sorter:"string"},
-                           {title:"Price",field:"price",sorter:"number"} ]
-                   });
-
-                   document.getElementById('btn_download').style.visibility = "visible";
-                   document.getElementById('btn_clear').style.visibility = "visible";
-                }
-        })
-    })
-
-    btn_download.addEventListener("click", function () {
-        table.download("csv", filename);
-    });
-
     function file_change(){
          myFile_obj = document.getElementById('myFile');
+         filename = document.getElementById('myFile').files[0].name;
          if(myFile_obj!=null){
              console.log("file is not null");
          } else {
@@ -122,11 +66,56 @@
     }
 
     btn_submit.addEventListener("click", function (e) {
+        if(myFile_obj==null) return;
+        console.log("here2");
+        let csv_button = Papa.parse(myFile_obj.files[0], {
+            download: true,
+            header: true,
+            complete: function (results) {
+                table_div.style.visibility = "visible";
+                map_div.style.visibility = "visible";
+                btn_submit.style.visibility = "hidden";
+                myFile_obj.style.visibility = "hidden";
+                filename = myFile_obj.files[0].name;
+                title_h1.innerHTML = "Airbnb Data";
+                document.getElementById('btn_download').style.visibility = "visible";
+                document.getElementById('btn_clear').style.visibility = "visible";
 
+                var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
+                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    maxZoom: 18,
+                    tileSize: 512,
+                    zoomOffset: -1,
+                    id: 'mapbox/streets-v11',
+                    // accessToken:Token,
+                }).addTo(mymap);
+                mymap.invalidateSize();
 
+                let table = new Tabulator("#example-table", {
+                    selectable: 1,
+                    data: results.data,
+                    height: 355,
+                    layout: "fitColumns",
+                    pagination: "local",
+                    paginationSize: 10,
+                    columns: [
+                        {title: "Name", field: "name", headerFilter: "input", sorter: "string"},
+                        {title: "Host ID", field: "host_id", sorter: "number"},
+                        {title: "ID", field: "id", sorter: "number"},
+                        {title: "Neighbourhood", field: "neighbourhood", sorter: "number"},
+                        {title: "Room Type", field: "room_type", sorter: "string"},
+                        {title: "Price", field: "price", sorter: "number"}]
+                });
+                console.log("here3");
 
+            }
+        });
+    });
 
-    }
+    btn_download.addEventListener("click", function () {
+        table.download("csv", filename);
+    });
 
     btn_clear.addEventListener("click", function (e) {
         table_div.style.visibility = "hidden";
@@ -144,9 +133,15 @@
         // input_sec.style.display = "block";
         // card_div.style.visibility = "hidden";
         // last_red_marker_latlng="";
-    }
+    });
 
-);
+
+    function zoomTo() {
+        var lat = document.getElementById("lat").value;
+        var lng = document.getElementById("lng").value;
+        // mymap.panTo(new L.LatLng(lat, lng));
+        mymap.setView([lat, lng], 17);
+    }
 
 
 </script>

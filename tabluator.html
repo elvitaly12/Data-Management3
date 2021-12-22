@@ -40,19 +40,21 @@
 </html>
 
 <script>
+
+
     let myFile_obj = null;
     let filename;
+    let markers;
     let btn_submit = document.getElementById('btn_submit');
     let btn_download = document.getElementById('btn_download');
     let btn_clear = document.getElementById('btn_clear');
-    let table;
-    //console.log("HERE");
 
     let table_div = document.getElementById('example-table');
     let map_div = document.getElementById('mapid');
     let title_h1 = document.getElementById('title_h1');
 
-    var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
+    var mymap = L.map('mapid').setView([40.730610, -73.935242], 12);
+    var markers_group = L.layerGroup();
     L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA', {
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         maxZoom: 18,
@@ -64,25 +66,38 @@
     mymap.invalidateSize();
 
     function file_change(){
-         myFile_obj = document.getElementById('myFile');
-         filename = document.getElementById('myFile').files[0].name;
-         if(myFile_obj!=null){
-             console.log("file is not null");
-         } else {
-             console.log("file is null");
-         }
+        myFile_obj = document.getElementById('myFile');
+        if(myFile_obj==null) return;
+        filename = document.getElementById('myFile').files[0].name;
     }
-
+    let table = new Tabulator(table_div, {
+            selectable: 1,
+            // data: results.data,
+            //  index: "id",
+            height: 355,
+            layout: "fitColumns",
+            pagination: "local",
+            paginationSize: 10,
+            columns: [
+                {title: "Name", field: "name", headerFilter: "input", sorter: "string"},
+                {title: "Host ID", field: "host_id", sorter: "number"},
+                {title: "ID", field: "id", sorter: "number"},
+                {title: "Neighbourhood", field: "neighbourhood", sorter: "number"},
+                {title: "Room Type", field: "room_type", sorter: "string"},
+                {title: "Price", field: "price", sorter: "number"}]
+    });
 
 
     btn_submit.addEventListener("click", function (e) {
         if(myFile_obj==null) return;
-        console.log("here2");
+
         console.log("File for parsing: ", myFile_obj.files[0].name);
         let csv_button = Papa.parse(myFile_obj.files[0], {
             download: true,
             header: true,
+            skipEmptyLines: true,
             complete: function (results) {
+                table.setData(results.data);
                 console.log(results.data);
                 table_div.style.visibility = "visible";
                 map_div.style.visibility = "visible";
@@ -90,28 +105,90 @@
                 myFile_obj.style.visibility = "hidden";
                 filename = myFile_obj.files[0].name;
                 title_h1.innerHTML = "Airbnb Data";
+
                 document.getElementById('btn_download').style.visibility = "visible";
                 document.getElementById('btn_clear').style.visibility = "visible";
 
-                table = new Tabulator("#example-table", {
-                    selectable: 1,
-                    data: results.data,
-                    //height: 355,
-                    layout: "fitColumns",
-                    pagination: "local",
-                    paginationSize: 10,
-                    columns: [
-                        {title: "Name", field: "name", headerFilter: "input", sorter: "string"},
-                        {title: "Host ID", field: "host_id", sorter: "number"},
-                        {title: "ID", field: "id", sorter: "number"},
-                        {title: "Neighbourhood", field: "neighbourhood", sorter: "number"},
-                        {title: "Room Type", field: "room_type", sorter: "string"},
-                        {title: "Price", field: "price", sorter: "number"}]
+                var customIcon = new L.Icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    iconSize: [20, 33],
+                    // iconAnchor: [12, 41],
+                    // popupAnchor: [1, -34],
                 });
-                                console.log(table);
+
+                markers_group.clearLayers();
+                for (let row of results.data) {
+                    var marker = L.marker([row.latitude, row.longitude], {title: row.name});
+                    marker.setIcon(customIcon);
+                    marker.addTo(mymap);
+                    markers_group.addLayer(marker);
+                }
+                mymap.addLayer(markers_group);
+
+                // table = new Tabulator("#example-table", {
+                //     selectable: 1,
+                //     data: results.data,
+                //     //height: 355,
+                //     layout: "fitColumns",
+                //     pagination: "local",
+                //     paginationSize: 10,
+                //     columns: [
+                //         {title: "Name", field: "name", headerFilter: "input", sorter: "string"},
+                //         {title: "Host ID", field: "host_id", sorter: "number"},
+                //         {title: "ID", field: "id", sorter: "number"},
+                //         {title: "Neighbourhood", field: "neighbourhood", sorter: "number"},
+                //         {title: "Room Type", field: "room_type", sorter: "string"},
+                //         {title: "Price", field: "price", sorter: "number"}]
+                // });
+                //                 console.log(table);
+                console.log("here7");
+               // function selected_row(row) {
+               //      console.log("selected row!");
+               //      row.getElement().style.backgroundColor = "#7fff00";
+               //      // card_div.style.visibility = "visible";
+               //      table.selectRow(parseInt(row.getData()['id']))
+               //      table.scrollToRow(row.getIndex(), "center", true);
+               //      zoomTo(row.getData().latitude, row.getData().longitude);
+               //      // _checkValidationlatlng(row);
+               //      // info_el.innerHTML = JSON.stringify(row.getData(), undefined, '\t');
+               //  }
 
 
+                // table.on("rowClick", function(e, row){
+                //    let y =   table.on("rowSelected",()=>{});
+               var x = table.on("rowSelected", function(row){
+                    //row - row component for the selected row
+                    console.log("selected row event handler!");
+                    row.getElement().style.backgroundColor = "#7fff00";
+                    // card_div.style.visibility = "visible";
+                    // table.selectRow(parseInt(row.getData()['id']))
+                    // table.scrollToRow(row.getIndex(), "center", true);
+                    zoomTo(row.getData().latitude, row.getData().longitude);
 
+                    //update markers and put only one!
+                    // markers_group.clearLayers();
+                    // // for (let row of results.data) {
+                    // var marker = L.marker([row.latitude, row.longitude], {title: row.name});
+                    // marker.setIcon(customIcon);
+                    // marker.addTo(mymap);
+                    // markers_group.addLayer(marker);
+                    // // }
+                    // mymap.addLayer(markers_group);
+                    // zoomTo(row.latitude, row.longitude);
+
+                    // _checkValidationlatlng(row);
+                    // info_el.innerHTML = JSON.stringify(row.getData(), undefined, '\t');
+                });
+
+                 // console.log(y);
+                console.log("here9");
+
+
+                // table.on("rowDeselected", _onDeselect)
+                // table.on("dataFiltered", function(filters, rows){
+                //     // last_red_marker_latlng = "";
+                //     // put_markers(rows, mymap);
+                // });
             }
         });
     });
@@ -141,9 +218,9 @@
     });
 
 
-    function zoomTo() {
-        var lat = document.getElementById("lat").value;
-        var lng = document.getElementById("lng").value;
+    function zoomTo(lat, lng) {
+        // var lat = document.getElementById("lat").value;
+        // var lng = document.getElementById("lng").value;
         // mymap.panTo(new L.LatLng(lat, lng));
         mymap.setView([lat, lng], 17);
     }

@@ -1,18 +1,9 @@
 
+* fix table.on
+* when clicking on an entry-> show designed card
 
-* implement leaflet logic -> given a coordinate we want it zoom in the in the map
-* when clicking on an entry-> show additional information and design the card
 * design html page using css (at last)
-
-* later :  check if we need prevent users to get non csv's files
-
-
-NEW MISSIONS FOR SHORT TERM:
-
-1. check  why download file doesnt work
-2. check if user clicked submit before enter a file
-3. check why buttons "download" and "clear" dont appear after first clear and another input file
-
+* very very optional: filter markers when filtering table
 
 done:
 
@@ -20,5 +11,10 @@ done:
 * parse the csv file using papa parse
 * implement table logic-> we want the table to be interactive (filter,sorting,pagination)
 * create user for mapbox to get a token
-
+* check why buttons "download" and "clear" dont appear after first clear and another input file
+* check  why download file doesnt work
+* check if user clicked submit before enter a file
+* implement leaflet logic -> given a coordinate we want it zoom in the in the map
+* add markers for every place
+* extract coordinates from selected entry and send them to zoomTo (and remain only one marker.)
 

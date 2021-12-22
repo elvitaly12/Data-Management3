@@ -45,13 +45,23 @@
     let btn_submit = document.getElementById('btn_submit');
     let btn_download = document.getElementById('btn_download');
     let btn_clear = document.getElementById('btn_clear');
-
+    let table;
     //console.log("HERE");
-
 
     let table_div = document.getElementById('example-table');
     let map_div = document.getElementById('mapid');
     let title_h1 = document.getElementById('title_h1');
+
+    var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
+    L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA', {
+        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        maxZoom: 18,
+        tileSize: 512,
+        zoomOffset: -1,
+        id: 'mapbox/streets-v11',
+        // accessToken:Token,
+    }).addTo(mymap);
+    mymap.invalidateSize();
 
     function file_change(){
          myFile_obj = document.getElementById('myFile');
@@ -59,19 +69,21 @@
          if(myFile_obj!=null){
              console.log("file is not null");
          } else {
-             myFile_obj.value="";
-             myFile_obj=null;
              console.log("file is null");
          }
     }
 
+
+
     btn_submit.addEventListener("click", function (e) {
         if(myFile_obj==null) return;
         console.log("here2");
+        console.log("File for parsing: ", myFile_obj.files[0].name);
         let csv_button = Papa.parse(myFile_obj.files[0], {
             download: true,
             header: true,
             complete: function (results) {
+                console.log(results.data);
                 table_div.style.visibility = "visible";
                 map_div.style.visibility = "visible";
                 btn_submit.style.visibility = "hidden";
@@ -81,21 +93,10 @@
                 document.getElementById('btn_download').style.visibility = "visible";
                 document.getElementById('btn_clear').style.visibility = "visible";
 
-                var mymap = L.map('mapid').setView([32.7768, 35.0231], 15);
-                L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1Ijoib2ZpcmFzdWxpbjMiLCJhIjoiY2t4YWwzMXo4MGlmNDJvbXd2azFodzd4ciJ9.yw08hD-wossSoLjZkqzkSA', {
-                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                    maxZoom: 18,
-                    tileSize: 512,
-                    zoomOffset: -1,
-                    id: 'mapbox/streets-v11',
-                    // accessToken:Token,
-                }).addTo(mymap);
-                mymap.invalidateSize();
-
-                let table = new Tabulator("#example-table", {
+                table = new Tabulator("#example-table", {
                     selectable: 1,
                     data: results.data,
-                    height: 355,
+                    //height: 355,
                     layout: "fitColumns",
                     pagination: "local",
                     paginationSize: 10,
@@ -107,13 +108,17 @@
                         {title: "Room Type", field: "room_type", sorter: "string"},
                         {title: "Price", field: "price", sorter: "number"}]
                 });
-                console.log("here3");
+                                console.log(table);
+
+
 
             }
         });
     });
 
     btn_download.addEventListener("click", function () {
+        console.log("are we here?");
+        console.log(filename);
         table.download("csv", filename);
     });
 
@@ -128,7 +133,7 @@
         myFile_obj.value = "";
         myFile_obj=null;
         table.clearData();
-
+        //table = null;
         // map_view.style.visibility = "hidden";
         // input_sec.style.display = "block";
         // card_div.style.visibility = "hidden";

@@ -58,7 +58,7 @@
     let table_div = document.getElementById('example-table');
     let map_div = document.getElementById('mapid');
     let title_h1 = document.getElementById('title_h1');
-
+    let selected_row;
     let table1 = document.getElementById('table1');
     let mycard = document.getElementById('mycard');
 
@@ -89,6 +89,7 @@
             selectable: 1,
           rowSelected:function(row) {
          row.getElement().style.backgroundColor = "#A6A6DF";
+         selected_row = row;
                     try {
                         if(row.getData().latitude && row.getData().longitude){
                             console.log(row.getData().latitude);
@@ -157,8 +158,8 @@
                         var lat = e.latlng.lat;
                         var lang = e.latlng.lng;
                         zoomTo(lat,lang);
-                        row = get_raw_by_lattiude(lat,lang);
-                        // insert_my_card(row);
+                        // row = get_raw_by_lattiude(lat,lang);
+                        //   insert_my_card(row);
                     });
                 }
                 mymap.addLayer(markers_group);
@@ -167,7 +168,12 @@
                     first_check = mycard.firstChild;
                     if(first_check!=null)
                     {
+                        // child = mycard.firstChild;
                         mycard.removeChild(first_check);
+                        selected_row.getElement().style.backgroundColor = "#ffffff";
+                         // get_raw_by_lattiude(lat,lang);
+
+
                     }
 
                 })
@@ -219,10 +225,17 @@
 
     function get_raw_by_lattiude(lat,lang)
     {
-       let  rows = [];
-       console.log(rows);
-        rows = table.getRows()
-      .filter(row => row.getData().latitude==lat)
-        .forEach(row => insert_my_card(row));
+       // let  rows = [];
+      //  console.log(lat);
+      //    table.getRows()
+      // .filter(row => row.getData().latitude==lat && row.getData().longitude==lang)
+      //   .forEach(row => row.getElement().style.backgroundColor = "#ffffff");
+      //
+      let  rows =  table.getRows();
+        for (row in rows)
+        {
+            if (row['latitude']==lat && row['longitude']==lang) return row;
+        }
+        return null;
     }
 </script>

@@ -1,18 +1,9 @@
-
-
-* when clicking on an entry-> show designed card
-
 * design html page using css (at last)
-
-NEW:
-* address missing data in the table
-* add sorting with shuna
-* check if we use Case-insensitive, filter
-* think if possible remove all selected entries when new one selected
 
 
 done:
-
+* add sorting with shuna
+* check if we use Case-insensitive, filter
 * implement basic html page with upload button
 * parse the csv file using papa parse
 * implement table logic-> we want the table to be interactive (filter,sorting,pagination)
@@ -24,3 +15,6 @@ done:
 * add markers for every place
 * extract coordinates from selected entry and send them to zoomTo (and remain only one marker.)
 * fix table.on
+* address missing data in the table
+* think if possible remove all selected entries when new one selected
+* when clicking on an entry-> show designed card

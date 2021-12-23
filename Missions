@@ -1,9 +1,15 @@
 
-* fix table.on
+
 * when clicking on an entry-> show designed card
 
 * design html page using css (at last)
-* very very optional: filter markers when filtering table
+
+NEW:
+* address missing data in the table
+* add sorting with shuna
+* check if we use Case-insensitive, filter
+* think if possible remove all selected entries when new one selected
+
 
 done:
 
@@ -17,4 +23,4 @@ done:
 * implement leaflet logic -> given a coordinate we want it zoom in the in the map
 * add markers for every place
 * extract coordinates from selected entry and send them to zoomTo (and remain only one marker.)
-
+* fix table.on

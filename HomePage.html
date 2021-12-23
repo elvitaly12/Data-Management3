@@ -9,17 +9,40 @@
 </head>
 <h1>File Upload</h1>
 <body>
-<div>
-    <button id="select-row">Select "Oli Bob"</button>
-    <button id="deselect-row">Deselect "Oli Bob"</button>
-    <button id="select-all">Select All</button>
-    <button id="deselect-all">Deselect All</button>
 
-    <span id="select-stats"></span>
-</div>
 
-<div id="example-table"></div>
+<!-- <div class="column"  id="row1">-->
+<!--         <div class="row" id="column1">-->
+<!--                 <p>COLUMN1</p>-->
+<!--         </div>-->
+<!--         <div class="row" id="column2">-->
+<!--                   <p>COLUMN2</p>-->
+<!--         </div>-->
+<!-- </div>-->
+ <table>
+           <tr>
+                   <th>
+                           <p>place(1,1)</p>
+                   </th>
+                      <th>
+                           <p>place(1,2)</p>
+                   </th>
+           </tr>
+             <tr>
+                   <th>
+                           <p>place(2,1)</p>
+                   </th>
+                      <th>
+                           <p>place(2,2)</p>
+                   </th>
+           </tr>
 
+ </table>
+
+
+
+<!--</div>-->
+<!--<div id="example-table"></div>-->
 </body>
 
 
@@ -32,80 +55,41 @@
 </html>
 
 <link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
-  <script type= "text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js">
-
-   var table = new Tabulator("#example-table", {
-    height:"311px",
-    selectable:true, //make rows selectable
-    columns:[
-	    {title:"Name", field:"name", width:200},
-	    {title:"Progress", field:"progress", width:100, hozAlign:"right", sorter:"number"},
-	    {title:"Gender", field:"gender", width:100},
-	    {title:"Rating", field:"rating", hozAlign:"center", width:80},
-	    {title:"Favourite Color", field:"col"},
-	    {title:"Date Of Birth", field:"dob", hozAlign:"center", sorter:"date"},
-	    {title:"Driver", field:"car", hozAlign:"center", width:100},
-    ],
-});
-
-table.on("rowSelectionChanged", function(data, rows){
-  document.getElementById("select-stats").innerHTML = data.length;
-});
-
-//select row on "select" button click
-document.getElementById("select-row").addEventListener("click", function(){
-    table.selectRow(1);
-});
-
-//deselect row on "deselect" button click
-document.getElementById("deselect-row").addEventListener("click", function(){
-    table.deselectRow(1);
-});
-
-//select row on "select all" button click
-document.getElementById("select-all").addEventListener("click", function(){
-    table.selectRow();
-});
-
-//deselect row on "deselect all" button click
-document.getElementById("deselect-all").addEventListener("click", function(){
-    table.deselectRow();
-});
-
-
-
-// // console.log("started");
-// let csv_button = document.getElementById('btn_csv_upload').addEventListener('click',()=> {
-//         Papa.parse(document.getElementById('myFile').files[0],
-//             {
-//                 // console.log("here");
-//                 download:true,
-//                 header:true,
-//                 complete:function (results)
-//                 {
-//                     console.log(results);
-//                   //initialize table-->
-//                   //  let table = new Tabulator("#example-table", {
-//                   //       data:results, //assign data to table-->
-//                   //      autoColumns:true, //create columns from data field names-->
-//                   //  });
+        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
+<script>
+// var tabledata = [
+//     {id:1, name:"Oli Bob", progress:12, gender:"male", rating:1, col:"red", dob:"19/02/1984", car:1},
+//     {id:2, name:"Mary May", progress:1, gender:"female", rating:2, col:"blue", dob:"14/05/1982", car:true},
+//     {id:3, name:"Christine Lobowski", progress:42, gender:"female", rating:0, col:"green", dob:"22/05/1982", car:"true"},
+//     {id:4, name:"Brendon Philips", progress:100, gender:"male", rating:1, col:"orange", dob:"01/08/1980"},
+//     {id:5, name:"Margret Marmajuke", progress:16, gender:"female", rating:5, col:"yellow", dob:"31/01/1999"},
+//     {id:6, name:"Frank Harbours", progress:38, gender:"male", rating:4, col:"red", dob:"12/05/1966", car:1},
+// ];
+//
+// //initialize table
+// let table = new Tabulator("#example-table", {
+//     selectable: true,
+//     data:tabledata, //assign data to table
+//     autoColumns:true, //create columns from data field names
+//      rowSelected:function(row)
+//      {
+//             console.log(row);
+//     },
+// });
+//
+//     // table.on("rowSelected", function(row) {
+//     //                         //row - row component for the selected row
+//     //                         console.log("selected row event handler!");
+//     //                         row.getElement().style.backgroundColor = "#7fff00";
+//     //                         zoomTo(row.getData().latitude, row.getData().longitude);
+//     //                     });
 //
 //
-//                 }
-//             })
-// })
+//
+
+
 
 </script>
 
 
-<!--<!DOCTYPE html> <html>-->
-
-<!--<body>-->
-<!--<h1>File Upload</h1>-->
-<!--<form action="/action_page.php">-->
-<!--  <input type="file" id="myFile" name="filename">-->
-<!--  <input type="submit">-->
-<!--</form>-->
-<!--</body>-->
-<!--</html>-->
 

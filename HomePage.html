@@ -1,95 +1,39 @@
-<!DOCTYPE html> <html>
-<head>
-<script type = "text/javascript" src ="papaparse.min.js">
+<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
+<div class="container center">
+	<div class="row">
+		<div class="col-md-12">
+			<h1 class="white">Custom File Upload</h1>
+			<p class="white">submit is allowed only in case uploading vsc file.</p>
+		</div>
+	</div>
 
-      <link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
-        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
-</script>
-</head>
-<h1>File Upload</h1>
-<body>
+	<form name="upload" method="post" action="#" enctype="multipart/form-data" accept-charset="utf-8">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3 center">
+				<div class="btn-container">
+					<!--the three icons: default, ok file (img), error file (not an img)-->
+					<h1 class="imgupload"><i class="fa fa-file-image-o"></i></h1>
+					<h1 class="imgupload ok"><i class="fa fa-check"></i></h1>
+					<h1 class="imgupload stop"><i class="fa fa-times"></i></h1>
+					<!--this field changes dinamically displaying the filename we are trying to upload-->
+					<p id="namefile">Only pics allowed! (jpg,jpeg,bmp,png)</p>
+					<!--our custom btn which which stays under the actual one-->
+					<button type="button" id="btnup" class="btn btn-primary btn-lg">Browse for your pic!</button>
+					<!--this is the actual file input, is set with opacity=0 beacause we wanna see our custom one-->
+					<input type="file" value="" name="fileup" id="fileup">
+				</div>
+			</div>
+		</div>
+			<!--additional fields-->
+		<div class="row">
+			<div class="col-md-12">
+				<!--the defauld disabled btn and the actual one shown only if the three fields are valid-->
+				<input type="submit" value="Submit!" class="btn btn-primary" id="submitbtn">
+				<button type="button" class="btn btn-default" disabled="disabled" id="fakebtn">Submit! <i class="fa fa-minus-circle"></i></button>
+			</div>
+		</div>
+	</form>
+</div>
 
-
-<!-- <div class="column"  id="row1">-->
-<!--         <div class="row" id="column1">-->
-<!--                 <p>COLUMN1</p>-->
-<!--         </div>-->
-<!--         <div class="row" id="column2">-->
-<!--                   <p>COLUMN2</p>-->
-<!--         </div>-->
-<!-- </div>-->
- <table>
-           <tr>
-                   <th>
-                           <p>place(1,1)</p>
-                   </th>
-                      <th>
-                           <p>place(1,2)</p>
-                   </th>
-           </tr>
-             <tr>
-                   <th>
-                           <p>place(2,1)</p>
-                   </th>
-                      <th>
-                           <p>place(2,2)</p>
-                   </th>
-           </tr>
-
- </table>
-
-
-
-<!--</div>-->
-<!--<div id="example-table"></div>-->
-</body>
-
-
-
-
-<!--<link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">-->
-<!--<script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>-->
-
-
-</html>
-
-<link href="https://unpkg.com/tabulator-tables@4.8.4/dist/css/tabulator.min.css" rel="stylesheet">
-        <script type="text/javascript" src="https://unpkg.com/tabulator-tables@4.8.4/dist/js/tabulator.min.js"></script>
-<script>
-// var tabledata = [
-//     {id:1, name:"Oli Bob", progress:12, gender:"male", rating:1, col:"red", dob:"19/02/1984", car:1},
-//     {id:2, name:"Mary May", progress:1, gender:"female", rating:2, col:"blue", dob:"14/05/1982", car:true},
-//     {id:3, name:"Christine Lobowski", progress:42, gender:"female", rating:0, col:"green", dob:"22/05/1982", car:"true"},
-//     {id:4, name:"Brendon Philips", progress:100, gender:"male", rating:1, col:"orange", dob:"01/08/1980"},
-//     {id:5, name:"Margret Marmajuke", progress:16, gender:"female", rating:5, col:"yellow", dob:"31/01/1999"},
-//     {id:6, name:"Frank Harbours", progress:38, gender:"male", rating:4, col:"red", dob:"12/05/1966", car:1},
-// ];
-//
-// //initialize table
-// let table = new Tabulator("#example-table", {
-//     selectable: true,
-//     data:tabledata, //assign data to table
-//     autoColumns:true, //create columns from data field names
-//      rowSelected:function(row)
-//      {
-//             console.log(row);
-//     },
-// });
-//
-//     // table.on("rowSelected", function(row) {
-//     //                         //row - row component for the selected row
-//     //                         console.log("selected row event handler!");
-//     //                         row.getElement().style.backgroundColor = "#7fff00";
-//     //                         zoomTo(row.getData().latitude, row.getData().longitude);
-//     //                     });
-//
-//
-//
-
-
-
-</script>
-
-
-
+<a href="http://www.emilianocostanzo.com" target="_blank" id="sign">EMI</a>
